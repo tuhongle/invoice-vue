@@ -111,5 +111,16 @@
 </template>
 
 <script setup lang="ts">
+import { type Ref, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { useInvoiceDetailsStore } from '../stores/invoiceDetails';
+import { type Invoice } from '../types/invoiceType';
 
+const Route = useRoute();
+const invoiceDetailStore = useInvoiceDetailsStore();
+const invoice : Ref<Invoice> = ref<Invoice>();
+
+const idArray = 
+
+const id = Route.params.id;
 </script>

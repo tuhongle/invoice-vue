@@ -7,7 +7,7 @@
             <div class="col d-flex align-items-center">
               <div class="left-nav text-light">
                 <h1 class="display-3 fw-bold">Invoices</h1>
-                <p class="lead">There are 4 total invoices</p>
+                <p class="lead">There are {{ invoiceDetailStore.invoices.length }} total invoices</p>
               </div>
               <div class="right-nav ms-auto d-flex align-items-center">
                 <div class="filter dropdown">
@@ -57,25 +57,25 @@
     <div class="container-lg">
       <div class="row">
         <div class="col-12 col-md-10 col-lg-8 mx-auto">
-          <div class="row align-items-center bg-secondary py-5 px-4 rounded-5">
+          <div class="row align-items-center bg-secondary py-5 px-4 rounded-5" v-for="invoice in invoiceDetailStore.invoices" :key="invoice.id">
             <div class="col text-start">
-              <p class="mb-0">#093242</p>
+              <p class="mb-0">#{{ invoice.id }}</p>
             </div>
             <div class="col text-center">
-              <p class="mb-0">Due Jul 1, 2021</p>
+              <p class="mb-0">Due {{ new Date(invoice.paymentDue).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</p>
             </div>
             <div class="col text-center">
-              <p class="mb-0">Jean Kelly</p>
+              <p class="mb-0">{{ invoice.billTo.name }}</p>
             </div>
             <div class="col text-center">
-              <p class="mb-0">$999.99</p>
+              <p class="mb-0">$ {{ invoice.total }}</p>
             </div>
             <div class="col text-center d-flex align-items-center">
               <button class="btn btn-warning d-flex align-items-center text-light">
                 <div class="p-2 bg-white rounded-circle"></div>
-                <span class="ms-2 mb-0">Pending</span>
+                <span class="ms-2 mb-0">{{ invoice.status }}</span>
               </button>
-              <RouterLink :to="{name: 'invoice'}">
+              <RouterLink :to="{name: 'invoice', params: {id: invoice.id}}">
                 <i class="bi bi-chevron-right text-light fs-5 ms-3"></i>
               </RouterLink>
             </div>
@@ -87,5 +87,7 @@
 </template>
 
 <script setup lang="ts">
+import { useInvoiceDetailsStore } from '../stores/invoiceDetails';
+const invoiceDetailStore = useInvoiceDetailsStore();
 
 </script>
