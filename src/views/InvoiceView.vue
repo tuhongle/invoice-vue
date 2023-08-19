@@ -112,30 +112,17 @@
     </div>
 <!-- Modal -->
     <Teleport to="#modal">
-        <div class="modal left fade" id="invoiceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog vh-100 m-0">
-                <div class="modal-content bg-dark">
-                <!-- Modal here -->
-                    <modal />
-                <!-- ======== -->
-                    <div class="modal-footer d-flex justify-content-between py-4 px-5">
-                        <button type="button" class="btn btn-danger py-2 text-light" data-bs-dismiss="modal">Cancel</button>
-                        <div>
-                            <button type="button" class="btn btn-primary py-2 text-light" data-bs-dismiss="modal" @click="">Update Invoice</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <modalEdit :invoice="invoicesStore.invoices[i]" @updateEdit="updateInvoice"/>
     </Teleport>
 <!-- =========== -->
 </template>
 
 <script setup lang="ts">
-import { type Ref, ref } from 'vue';
-import modal from '../components/modal.vue';
+// import { type Ref, ref } from 'vue';
+import modalEdit from '../components/modalEdit.vue';
 import { useRoute } from 'vue-router';
 import { useInvoicesStore } from '../stores/invoices';
+import { type Invoice} from '../types/invoiceType';
 
 const Route = useRoute();
 const invoicesStore = useInvoicesStore();
@@ -143,5 +130,9 @@ const invoicesStore = useInvoicesStore();
 const id : string = Route.params.id;
 const idArray = invoicesStore.invoices.map(el => el.id);
 const i = idArray.indexOf(id);
+
+const updateInvoice= (data: Invoice) => {
+    invoicesStore.invoices[i] = data;
+}
 
 </script>

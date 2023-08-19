@@ -1,7 +1,7 @@
 <template>
     <!-- Modal -->
-    <div class="modal show d-block" id="staticModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog vh-100 m-0 shadow-lg">
+    <div class="modal fade" id="invoiceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog vh-100 m-0">
             <div class="modal-content bg-dark">
                 <div class="modal-body small">
                     <div class="container mb-5">
@@ -12,21 +12,21 @@
                         <div class="row mb-4">
                             <div class="col">
                                 <label class="form-label">Street Address</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.addressFrom.address">
+                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billFrom.address">
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col-4">
                                 <label class="form-label">City</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.addressFrom.city">
+                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billFrom.city">
                             </div>
                             <div class="col-4">
                                 <label class="form-label">Zip Code</label>
-                                <input type="number" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.addressFrom.zipCode">
+                                <input type="number" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billFrom.zipCode">
                             </div>
                             <div class="col-4">
                                 <label class="form-label">Country</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.addressFrom.country">
+                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billFrom.country">
                             </div>
                         </div>
                     </div>
@@ -35,33 +35,33 @@
                         <div class="row mb-4">
                             <div class="col">
                                 <label class="form-label">Client's Name</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.client.name">
+                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billTo.name">
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col">
                                 <label class="form-label">Client's Email</label>
-                                <input type="email" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.client.mail">
+                                <input type="email" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billTo.mail">
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col">
                                 <label class="form-label">Street Address</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.client.address">
+                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billTo.address">
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col-4">
                                 <label class="form-label">City</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.client.city">
+                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billTo.city">
                             </div>
                             <div class="col-4">
                                 <label class="form-label">Zip Code</label>
-                                <input type="number" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.client.zipCode">
+                                <input type="number" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billTo.zipCode">
                             </div>
                             <div class="col-4">
                                 <label class="form-label">Country</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.client.country">
+                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billTo.country">
                             </div>
                         </div>
                     </div>
@@ -69,11 +69,11 @@
                         <div class="row mb-4">
                             <div class="col-6">
                                 <label class="form-label">Invoice Date</label>
-                                <input type="date" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.invoiceDate">
+                                <input type="date" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.invoiceDate">
                             </div>
                             <div class="col-6">
                                 <label class="form-label">Payment Due</label>
-                                <input type="date" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.paymentDue" disabled>
+                                <input type="date" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.paymentDue" disabled>
                             </div>
                         </div>
                         <div class="row mb-4">
@@ -88,7 +88,7 @@
                         <div class="row mb-4">
                             <div class="col">
                                 <label class="form-label">Product Description</label>
-                                <textarea type="text" class="form-control bg-secondary border-0 shadow-none" row mb-4s="2" v-model="invoiceDetailStore.description"></textarea>
+                                <textarea type="text" class="form-control bg-secondary border-0 shadow-none" row mb-4s="2" v-model="invoiceDetail.description"></textarea>
                             </div>
                         </div>
                     </div>
@@ -110,12 +110,12 @@
                             <div class="col-1"></div>
                         </div>
                     <!-- Create item -->
-                        <div class="row mb-4" v-for="(item, index) in invoiceDetailStore.itemList" :key="index">
+                        <div class="row mb-4" v-for="(item, index) in invoiceDetail.itemList" :key="index">
                             <itemList :item="item" :index="index"/>
                         </div>
                     <!-- ===== -->
                         <div class="row mb-4">
-                            <button class="btn btn-secondary py-2 rounded-5 d-flex align-items-center justify-content-center" @click="invoiceDetailStore.createItem">
+                            <button class="btn btn-secondary py-2 rounded-5 d-flex align-items-center justify-content-center" @click="createItem">
                                 <i class="bi bi-plus text-primary fs-3 me-2"></i>
                                 <span class="lead">Add New Item</span>
                             </button>
@@ -123,10 +123,9 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between py-4 px-5">
-                    <button type="button" class="btn btn-danger py-2 text-light" @click="invoicesStore.openModal = false">Discard</button>
+                    <button type="button" class="btn btn-danger py-2 text-light" data-bs-dismiss="modal">Cancel</button>
                     <div>
-                        <button type="button" class="btn btn-info py-2 me-3" data-bs-dismiss="modal" @click="invoicesStore.saveDraft">Save Draft</button>
-                        <button type="button" class="btn btn-primary py-2 text-light" data-bs-dismiss="modal" @click="invoicesStore.createInvoice">Create Invoice</button>
+                        <button type="button" class="btn btn-primary py-2 text-light" data-bs-dismiss="modal" @click="updateEdit">Update Invoice</button>
                     </div>
                 </div>
             </div>
@@ -135,26 +134,23 @@
 </template>
 
 <script setup lang="ts">
-import { onUnmounted, ref, watch } from 'vue';
-import { useInvoiceDetailsStore } from '../stores/invoiceDetails'
-import { useInvoicesStore } from '../stores/invoices';
+import { ref } from 'vue';
 import itemList from './itemList.vue';
+import { type Invoice} from '../types/invoiceType'
 
-const invoiceDetailStore = useInvoiceDetailsStore();
-const invoicesStore  = useInvoicesStore();
+const props = defineProps<{
+    invoice: Invoice
+}>();
+
+const emit = defineEmits<{
+    updateEdit: [value : Invoice]
+}>();
 
 const days = ref<number>(0);
+const invoiceDetail = ref<Invoice>();
+invoiceDetail.value = props.invoice;
 
-watch(days, () => {
-    const dateArray = invoiceDetailStore.invoiceDate.split('-');
-    const dueDay = new Date(+dateArray[0], +dateArray[1] -1, +dateArray[2] + +days.value!);
-    const year = dueDay.toLocaleString('default', {year: 'numeric'});
-    const month = dueDay.toLocaleString('default', { month: '2-digit'});
-    const day = dueDay.toLocaleString('default', { day: '2-digit'});
-    invoiceDetailStore.paymentDue = year + '-' + month + '-' + day;
-});
-
-onUnmounted(() => {
-    days.value = 0;
-})
+const updateEdit = () => {
+    emit('updateEdit', invoiceDetail.value);
+}
 </script>

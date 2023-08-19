@@ -8,6 +8,7 @@ import { type Invoice } from '../types/invoiceType'
 export const useInvoicesStore = defineStore("invoices", () => {
     const invoices = ref<Invoice[]>([]);
     const invoiceDetailsStore = useInvoiceDetailsStore();
+    const openModal = ref<boolean>(false);
 
     function saveDraft() {
         const id = uid(8).toUpperCase();
@@ -27,7 +28,8 @@ export const useInvoicesStore = defineStore("invoices", () => {
           itemList: invoiceDetailsStore.itemList
         };
         invoices.value.push(invoice);
-        invoiceDetailsStore.$reset;
+        invoiceDetailsStore.$reset();
+        openModal.value = false;
       }
     
       function createInvoice() {
@@ -48,12 +50,13 @@ export const useInvoicesStore = defineStore("invoices", () => {
           itemList: invoiceDetailsStore.itemList
         };
         invoices.value.push(invoice);
-        invoiceDetailsStore.$reset;
+        invoiceDetailsStore.$reset();
+        openModal.value = false;
       }
 
       function deleteInvoice(id: number) {
         invoices.value.splice(id, 1);
       }
 
-    return { invoices, saveDraft, createInvoice, deleteInvoice }
+    return { invoices, openModal, saveDraft, createInvoice, deleteInvoice }
 })

@@ -42,7 +42,7 @@
                     </li>
                   </ul>
                 </div>
-                <button class="btn btn-primary rounded-pill text-light ms-4 py-2" data-bs-toggle="modal" data-bs-target="#staticModal">
+                <button class="btn btn-primary rounded-pill text-light ms-4 py-2" @click="invoicesStore.openModal = true">
                   <i class="bi bi-plus-circle-fill me-1"></i>
                   New Invoice
                 </button>
@@ -57,7 +57,7 @@
     <div class="container-lg">
       <div class="row">
         <div class="col-12 col-md-10 col-lg-8 mx-auto">
-          <div class="row align-items-center bg-secondary py-5 px-4 rounded-5 mb-4" v-for="(invoice) in invoicesStore.invoices" :key="invoice.id">
+          <div class="row align-items-center bg-secondary py-5 px-4 rounded-5 mb-4" v-for="invoice in invoicesStore.invoices" :key="invoice.id">
             <div class="col text-start">
               <p class="mb-0">#{{ invoice.id }}</p>
             </div>
@@ -86,21 +86,8 @@
   </section>
 <!-- Modal -->
   <Teleport to="#modal">
-    <div class="modal left fade" id="staticModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog vh-100 m-0">
-            <div class="modal-content bg-dark">
-              <!-- Modal here -->
-                <modal />
-              <!-- ======== -->
-                <div class="modal-footer d-flex justify-content-between py-4 px-5">
-                    <button type="button" class="btn btn-danger py-2 text-light" data-bs-dismiss="modal">Discard</button>
-                    <div>
-                        <button type="button" class="btn btn-info py-2 me-3" data-bs-dismiss="modal" @click="invoicesStore.saveDraft">Save Draft</button>
-                        <button type="button" class="btn btn-primary py-2 text-light" data-bs-dismiss="modal" @click="invoicesStore.createInvoice">Create Invoice</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div v-if="invoicesStore.openModal">
+      <modal />
     </div>
   </Teleport>
 <!-- =========== -->
@@ -112,3 +99,18 @@ import { useInvoicesStore } from '../stores/invoices';
 const invoicesStore = useInvoicesStore();
 
 </script>
+
+<style scoped>
+.modal-enter-from {
+  left: -100%;
+  opacity: 0;
+}
+.modal-leave-to {
+  left: -100%;
+  opacity: 0;
+}
+.modal-enter-active,
+.modal-leave-active {
+  transition: all 5s linear;
+}
+</style>
