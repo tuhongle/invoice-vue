@@ -23,6 +23,7 @@ export interface Invoice {
     status: string,
     invoiceDate: string,
     paymentDue: string,
-    itemList: itemList,
+    description: string,
+    itemList: itemList[],
     total: number
 }

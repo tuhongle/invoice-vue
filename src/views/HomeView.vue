@@ -7,7 +7,7 @@
             <div class="col d-flex align-items-center">
               <div class="left-nav text-light">
                 <h1 class="display-3 fw-bold">Invoices</h1>
-                <p class="lead">There are {{ invoiceDetailStore.invoices.length }} total invoices</p>
+                <p class="lead">There are {{ invoicesStore.invoices.length }} total invoices</p>
               </div>
               <div class="right-nav ms-auto d-flex align-items-center">
                 <div class="filter dropdown">
@@ -57,7 +57,7 @@
     <div class="container-lg">
       <div class="row">
         <div class="col-12 col-md-10 col-lg-8 mx-auto">
-          <div class="row align-items-center bg-secondary py-5 px-4 rounded-5" v-for="invoice in invoiceDetailStore.invoices" :key="invoice.id">
+          <div class="row align-items-center bg-secondary py-5 px-4 rounded-5 mb-4" v-for="(invoice) in invoicesStore.invoices" :key="invoice.id">
             <div class="col text-start">
               <p class="mb-0">#{{ invoice.id }}</p>
             </div>
@@ -75,7 +75,7 @@
                 <div class="p-2 bg-white rounded-circle"></div>
                 <span class="ms-2 mb-0">{{ invoice.status }}</span>
               </button>
-              <RouterLink :to="{name: 'invoice', params: {id: invoice.id}}">
+              <RouterLink :to="{ name: 'invoice', params: {id: invoice.id} }">
                 <i class="bi bi-chevron-right text-light fs-5 ms-3"></i>
               </RouterLink>
             </div>
@@ -84,10 +84,31 @@
       </div>
     </div>
   </section>
+<!-- Modal -->
+  <Teleport to="#modal">
+    <div class="modal left fade" id="staticModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog vh-100 m-0">
+            <div class="modal-content bg-dark">
+              <!-- Modal here -->
+                <modal />
+              <!-- ======== -->
+                <div class="modal-footer d-flex justify-content-between py-4 px-5">
+                    <button type="button" class="btn btn-danger py-2 text-light" data-bs-dismiss="modal">Discard</button>
+                    <div>
+                        <button type="button" class="btn btn-info py-2 me-3" data-bs-dismiss="modal" @click="invoicesStore.saveDraft">Save Draft</button>
+                        <button type="button" class="btn btn-primary py-2 text-light" data-bs-dismiss="modal" @click="invoicesStore.createInvoice">Create Invoice</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </Teleport>
+<!-- =========== -->
 </template>
 
 <script setup lang="ts">
-import { useInvoiceDetailsStore } from '../stores/invoiceDetails';
-const invoiceDetailStore = useInvoiceDetailsStore();
+import modal from '../components/modal.vue';
+import { useInvoicesStore } from '../stores/invoices';
+const invoicesStore = useInvoicesStore();
 
 </script>

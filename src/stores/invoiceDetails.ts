@@ -1,7 +1,6 @@
-import { ref, computed, type Ref, type ComputedRef } from 'vue'
+import { ref, type Ref } from 'vue'
 import { defineStore } from 'pinia'
 
-import { uid } from 'uid'
 import { type Address, type Client, type itemList, type Invoice } from '../types/invoiceType'
 
 export const useInvoiceDetailsStore = defineStore('invoiceDetail', () => {
@@ -11,6 +10,7 @@ export const useInvoiceDetailsStore = defineStore('invoiceDetail', () => {
   const itemList = ref<itemList[]>([]);
   const invoiceDate = ref<string>('');
   const paymentDue = ref<string>('');
+  const description = ref<string>('');
 
   function createItem() {
     const item : Ref<itemList> = ref({name: '', qty: 0, price: 0});
@@ -21,7 +21,13 @@ export const useInvoiceDetailsStore = defineStore('invoiceDetail', () => {
     itemList.value.splice(i, 1);
   }
 
-  function saveDraft() {
+  const tempDay = new Date();
+  const year = tempDay.toLocaleString('default', {year: 'numeric'});
+  const month = tempDay.toLocaleString('default', { month: '2-digit'});
+  const day = tempDay.toLocaleString('default', { day: '2-digit'});
+  invoiceDate.value = year + '-' + month + '-' + day;
+
+  /* function saveDraft() {
     const id = uid(8).toUpperCase();
     let total: number = 0;
     itemList.value.forEach(item => {
@@ -57,7 +63,7 @@ export const useInvoiceDetailsStore = defineStore('invoiceDetail', () => {
       itemList: itemList.value
     };
     invoices.value.push(invoice);
-  }
+  } */
 
-  return { invoices, addressFrom, client, itemList, invoiceDate, paymentDue, createItem, deleteItem, saveDraft, createInvoice }
+  return { invoices, addressFrom, client, itemList, invoiceDate, paymentDue, description, createItem, deleteItem }
 })
