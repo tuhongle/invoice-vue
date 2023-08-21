@@ -98,7 +98,7 @@
                                                 <p>{{ item.price }}</p>
                                             </div>
                                             <div class="col-2 text-end">
-                                                <p>{{ item.qty * item.price }}</p>
+                                                <p v-if="item.qty && item.price">{{ item.qty * item.price }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -132,15 +132,17 @@ import { type status } from '../types/invoiceType'
 const Route = useRoute();
 const invoicesStore = useInvoicesStore();
 
-const id : string = Route.params.id;
+const id : any = Route.params.id;
 const idArray = invoicesStore.invoices.map(el => el.id);
 const i = idArray.indexOf(id);
-const pending : Ref<boolean> = ref();
+const pending : Ref<boolean | undefined> = ref();
 
 watchEffect(() => {
     let total : number = 0;
     invoicesStore.invoices[i].itemList.forEach(el => {
-        total += +el.qty * +el.price;
+        if (el.qty && el.price) {
+            total += +el.qty * +el.price;
+        }
     });
     invoicesStore.invoices[i].total = total;
 });

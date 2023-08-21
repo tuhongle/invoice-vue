@@ -15,7 +15,9 @@ export const useInvoicesStore = defineStore("invoices", () => {
         const id = uid(8).toUpperCase();
         let total: number = 0;
         invoiceDetailsStore.itemList.forEach(item => {
-          total += item.qty * item.price;
+          if (item.qty && item.price) {
+            total += item.qty * item.price;
+          }
         });
         const invoice : Invoice = {
           id: id as string,
@@ -37,7 +39,9 @@ export const useInvoicesStore = defineStore("invoices", () => {
         const id = uid(8).toUpperCase();
         let total: number = 0;
         invoiceDetailsStore.itemList.forEach(item => {
-          total += item.qty * item.price;
+          if (item.qty && item.price) {
+            total += item.qty * item.price;
+          }
         });
         const invoice = {
           id,

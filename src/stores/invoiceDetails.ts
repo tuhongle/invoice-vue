@@ -20,7 +20,7 @@ export const useInvoiceDetailsStore = defineStore('invoiceDetail', () => {
   invoiceDate.value = year + '-' + month + '-' + day;
 
   function createItem() {
-    const item : Ref<itemList> = ref({name: ''});
+    const item : Ref<itemList> = ref({name: '', qty: 0, price: 0});
     itemList.value.push(item.value);
   }
 
