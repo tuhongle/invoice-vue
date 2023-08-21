@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { computed, ref, type ComputedRef } from 'vue'
 import { defineStore } from 'pinia'
 import { useInvoiceDetailsStore } from './invoiceDetails';
 
@@ -9,6 +9,7 @@ export const useInvoicesStore = defineStore("invoices", () => {
     const invoices = ref<Invoice[]>([]);
     const invoiceDetailsStore = useInvoiceDetailsStore();
     const openModal = ref<boolean>(false);
+    const filter = ref<status | 'all'>('all');
 
     function saveDraft() {
         const id = uid(8).toUpperCase();
@@ -54,9 +55,22 @@ export const useInvoicesStore = defineStore("invoices", () => {
         openModal.value = false;
       }
 
+      function discard() {
+        invoiceDetailsStore.$reset();
+        openModal.value = false;
+      }
+
       function deleteInvoice(id: number) {
         invoices.value.splice(id, 1);
       }
 
-    return { invoices, openModal, saveDraft, createInvoice, deleteInvoice }
+      const invoicesArray : ComputedRef<Invoice[]> = computed(() => {
+        if (filter.value === 'all') {
+          return invoices.value;
+        } else {
+          return invoices.value.filter(el => el.status === filter.value);
+        }
+      });
+
+    return { invoices, openModal, invoicesArray, filter, saveDraft, createInvoice, discard, deleteInvoice }
 })

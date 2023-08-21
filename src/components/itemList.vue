@@ -1,12 +1,12 @@
 <template>
     <div class="col-5">
-        <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="item.name">
+        <input placeholder=" " type="text" class="form-control bg-secondary border-0 shadow-none" v-model="item.name">
     </div>
     <div class="col-2">
-        <input type="number" class="form-control bg-secondary border-0 shadow-none" v-model="item.qty">
+        <input placeholder=" " type="number" class="form-control bg-secondary border-0 shadow-none" v-model="item.qty">
     </div>
     <div class="col-2">
-        <input type="number" class="form-control bg-secondary border-0 shadow-none" v-model="item.price">
+        <input placeholder=" " type="number" class="form-control bg-secondary border-0 shadow-none" v-model="item.price">
     </div>
     <div class="col-2 d-flex align-items-center lead">
         <p class="mb-0 ms-1">${{ item.qty * item.price }}</p>

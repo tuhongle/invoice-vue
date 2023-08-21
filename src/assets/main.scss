@@ -35,11 +35,33 @@ html {
     h1, p, span {
         color: white;
     }
+
+    ul.dropdown-menu {
+        li.form-check {
+            label {
+                transition: all 0.3s linear;
+                &:hover {
+                    background-color: $success !important;
+                    cursor: pointer;
+                    color: white;
+                }
+            }
+        }
+    }
+
     #modal {
+        .modal-content {
+            min-width: 40vw !important;
+        }
+
         label, input, textarea {
             color: white;
         }
-        input {
+        input, textarea, select {
+            &:not(:placeholder-shown) {
+                background-color: white !important;
+                color: #151524;
+            }
             padding-top: 7px;
             padding-bottom: 7px;
         }

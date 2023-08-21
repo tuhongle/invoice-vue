@@ -12,21 +12,21 @@
                         <div class="row mb-4">
                             <div class="col">
                                 <label class="form-label">Street Address</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billFrom.address">
+                                <input placeholder=" " type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billFrom.address">
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col-4">
                                 <label class="form-label">City</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billFrom.city">
+                                <input placeholder=" " type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billFrom.city">
                             </div>
                             <div class="col-4">
                                 <label class="form-label">Zip Code</label>
-                                <input type="number" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billFrom.zipCode">
+                                <input placeholder=" " type="number" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billFrom.zipCode">
                             </div>
                             <div class="col-4">
                                 <label class="form-label">Country</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billFrom.country">
+                                <input placeholder=" " type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billFrom.country">
                             </div>
                         </div>
                     </div>
@@ -35,33 +35,33 @@
                         <div class="row mb-4">
                             <div class="col">
                                 <label class="form-label">Client's Name</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billTo.name">
+                                <input placeholder=" " type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billTo.name">
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col">
                                 <label class="form-label">Client's Email</label>
-                                <input type="email" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billTo.mail">
+                                <input placeholder=" " type="email" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billTo.mail">
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col">
                                 <label class="form-label">Street Address</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billTo.address">
+                                <input placeholder=" " type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billTo.address">
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col-4">
                                 <label class="form-label">City</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billTo.city">
+                                <input placeholder=" " type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billTo.city">
                             </div>
                             <div class="col-4">
                                 <label class="form-label">Zip Code</label>
-                                <input type="number" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billTo.zipCode">
+                                <input placeholder=" " type="number" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billTo.zipCode">
                             </div>
                             <div class="col-4">
                                 <label class="form-label">Country</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billTo.country">
+                                <input placeholder=" " type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.billTo.country">
                             </div>
                         </div>
                     </div>
@@ -69,17 +69,17 @@
                         <div class="row mb-4">
                             <div class="col-6">
                                 <label class="form-label">Invoice Date</label>
-                                <input type="date" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.invoiceDate">
+                                <input placeholder=" " type="date" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.invoiceDate">
                             </div>
                             <div class="col-6">
                                 <label class="form-label">Payment Due</label>
-                                <input type="date" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.paymentDue" disabled>
+                                <input placeholder=" " type="date" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetail.paymentDue" disabled>
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col">
                                 <label class="form-label">Payment Terms</label>
-                                <select class="form-select bg-secondary text-light border-0 shadow-none py-2" v-model="days">
+                                <select class="form-select bg-secondary text-dark border-0 shadow-none py-2" v-model="days">
                                     <option value='30' class="form-control">Net 30 days</option>
                                     <option value='60' class="form-control">Net 60 days</option>
                                 </select>
@@ -88,7 +88,7 @@
                         <div class="row mb-4">
                             <div class="col">
                                 <label class="form-label">Product Description</label>
-                                <textarea type="text" class="form-control bg-secondary border-0 shadow-none" row mb-4s="2" v-model="invoiceDetail.description"></textarea>
+                                <textarea placeholder=" " type="text" class="form-control bg-secondary border-0 shadow-none" row mb-4s="2" v-model="invoiceDetail.description"></textarea>
                             </div>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { type Ref, ref, watch } from 'vue';
 import ItemListEdit from './ItemListEdit.vue'
 import { type Invoice, type itemList} from '../types/invoiceType'
 import { useInvoicesStore } from '../stores/invoices';
@@ -143,7 +143,6 @@ const props = defineProps<{
     i: number
 }>();
 
-const days = ref<number>(0);
 const invoicesStore = useInvoicesStore();
 
 const invoice = JSON.parse(JSON.stringify(invoicesStore.invoices[props.i]));
@@ -166,4 +165,15 @@ const createItem = () => {
 const deleteItem = (i : number) => {
     invoiceDetail.value.itemList.splice(i, 1);
 }
+
+const days = ref<number | null>(null);
+
+watch(days, () => {
+    const dateArray = invoiceDetail.value.invoiceDate.split('-');
+    const dueDay = new Date(+dateArray[0], +dateArray[1] -1, +dateArray[2] + +days.value!);
+    const year = dueDay.toLocaleString('default', {year: 'numeric'});
+    const month = dueDay.toLocaleString('default', { month: '2-digit'});
+    const day = dueDay.toLocaleString('default', { day: '2-digit'});
+    invoiceDetail.value.paymentDue = year + '-' + month + '-' + day;
+});
 </script>

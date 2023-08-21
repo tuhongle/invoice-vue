@@ -12,21 +12,21 @@
                         <div class="row mb-4">
                             <div class="col">
                                 <label class="form-label">Street Address</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.addressFrom.address">
+                                <input placeholder=" " type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.addressFrom.address">
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col-4">
                                 <label class="form-label">City</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.addressFrom.city">
+                                <input placeholder=" " type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.addressFrom.city">
                             </div>
                             <div class="col-4">
                                 <label class="form-label">Zip Code</label>
-                                <input type="number" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.addressFrom.zipCode">
+                                <input placeholder=" " type="number" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.addressFrom.zipCode">
                             </div>
                             <div class="col-4">
                                 <label class="form-label">Country</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.addressFrom.country">
+                                <input placeholder=" " type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.addressFrom.country">
                             </div>
                         </div>
                     </div>
@@ -35,33 +35,33 @@
                         <div class="row mb-4">
                             <div class="col">
                                 <label class="form-label">Client's Name</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.client.name">
+                                <input placeholder=" " type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.client.name">
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col">
                                 <label class="form-label">Client's Email</label>
-                                <input type="email" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.client.mail">
+                                <input placeholder=" " type="email" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.client.mail">
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col">
                                 <label class="form-label">Street Address</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.client.address">
+                                <input placeholder=" " type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.client.address">
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col-4">
                                 <label class="form-label">City</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.client.city">
+                                <input placeholder=" " type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.client.city">
                             </div>
                             <div class="col-4">
                                 <label class="form-label">Zip Code</label>
-                                <input type="number" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.client.zipCode">
+                                <input placeholder=" " type="number" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.client.zipCode">
                             </div>
                             <div class="col-4">
                                 <label class="form-label">Country</label>
-                                <input type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.client.country">
+                                <input placeholder=" " type="text" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.client.country">
                             </div>
                         </div>
                     </div>
@@ -69,17 +69,17 @@
                         <div class="row mb-4">
                             <div class="col-6">
                                 <label class="form-label">Invoice Date</label>
-                                <input type="date" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.invoiceDate">
+                                <input placeholder=" " type="date" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.invoiceDate">
                             </div>
                             <div class="col-6">
                                 <label class="form-label">Payment Due</label>
-                                <input type="date" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.paymentDue" disabled>
+                                <input placeholder=" " type="date" class="form-control bg-secondary border-0 shadow-none" v-model="invoiceDetailStore.paymentDue" disabled>
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col">
                                 <label class="form-label">Payment Terms</label>
-                                <select class="form-select bg-secondary text-light border-0 shadow-none py-2" v-model="days">
+                                <select class="form-select bg-secondary text-dark border-0 shadow-none py-2" v-model="days">
                                     <option value='30' class="form-control">Net 30 days</option>
                                     <option value='60' class="form-control">Net 60 days</option>
                                 </select>
@@ -88,7 +88,7 @@
                         <div class="row mb-4">
                             <div class="col">
                                 <label class="form-label">Product Description</label>
-                                <textarea type="text" class="form-control bg-secondary border-0 shadow-none" row mb-4s="2" v-model="invoiceDetailStore.description"></textarea>
+                                <textarea placeholder=" " type="text" class="form-control bg-secondary border-0 shadow-none" row mb-4s="2" v-model="invoiceDetailStore.description"></textarea>
                             </div>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between py-4 px-5">
-                    <button type="button" class="btn btn-danger py-2 text-light" @click="invoicesStore.openModal = false">Discard</button>
+                    <button type="button" class="btn btn-danger py-2 text-light" @click="invoicesStore.discard">Discard</button>
                     <div>
                         <button type="button" class="btn btn-info py-2 me-3" data-bs-dismiss="modal" @click="invoicesStore.saveDraft">Save Draft</button>
                         <button type="button" class="btn btn-primary py-2 text-light" data-bs-dismiss="modal" @click="invoicesStore.createInvoice">Create Invoice</button>
@@ -143,7 +143,7 @@ import ItemList from './ItemList.vue';
 const invoiceDetailStore = useInvoiceDetailsStore();
 const invoicesStore  = useInvoicesStore();
 
-const days = ref<number>(0);
+const days = ref<number | null>(null);
 
 watch(days, () => {
     const dateArray = invoiceDetailStore.invoiceDate.split('-');
@@ -155,6 +155,6 @@ watch(days, () => {
 });
 
 onUnmounted(() => {
-    days.value = 0;
+    days.value = null;
 })
 </script>

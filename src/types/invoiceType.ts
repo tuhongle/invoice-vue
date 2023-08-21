@@ -1,7 +1,7 @@
 export interface Address {
     address: string,
     city: string,
-    zipCode: number,
+    zipCode: number | null,
     country: string,
 }
 
@@ -12,8 +12,8 @@ export interface Client extends Address {
 
 export interface itemList {
     name: string,
-    qty: number,
-    price: number,
+    qty?: number,
+    price?: number,
 }
 
 export type status = 'Draft' | 'Pending' | 'Paid'
