@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { useInvoiceDetailsStore } from './invoiceDetails';
 
 import { uid } from 'uid'
-import { type Invoice } from '../types/invoiceType'
+import { type Invoice, type status } from '../types/invoiceType'
 
 export const useInvoicesStore = defineStore("invoices", () => {
     const invoices = ref<Invoice[]>([]);
@@ -18,7 +18,7 @@ export const useInvoicesStore = defineStore("invoices", () => {
         });
         const invoice : Invoice = {
           id: id as string,
-          status: 'Draft' as string,
+          status: 'Draft' as status,
           total: total as number,
           billFrom: invoiceDetailsStore.addressFrom,
           billTo: invoiceDetailsStore.client,
@@ -40,7 +40,7 @@ export const useInvoicesStore = defineStore("invoices", () => {
         });
         const invoice = {
           id,
-          status: 'Pending' as string,
+          status: 'Pending' as status,
           total,
           billFrom: invoiceDetailsStore.addressFrom,
           billTo: invoiceDetailsStore.client,

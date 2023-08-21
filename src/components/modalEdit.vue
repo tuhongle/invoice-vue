@@ -111,7 +111,7 @@
                         </div>
                     <!-- Create item -->
                         <div class="row mb-4" v-for="(item, index) in invoiceDetail.itemList" :key="index">
-                            <itemList :item="item" :index="index"/>
+                            <ItemListEdit :item="item" :index="index" @deleteItem="deleteItem"/>
                         </div>
                     <!-- ===== -->
                         <div class="row mb-4">
@@ -123,7 +123,7 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between py-4 px-5">
-                    <button type="button" class="btn btn-danger py-2 text-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger py-2 text-light" data-bs-dismiss="modal" @click="cancelEdit">Cancel</button>
                     <div>
                         <button type="button" class="btn btn-primary py-2 text-light" data-bs-dismiss="modal" @click="updateEdit">Update Invoice</button>
                     </div>
@@ -135,22 +135,35 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import itemList from './itemList.vue';
-import { type Invoice} from '../types/invoiceType'
+import ItemListEdit from './ItemListEdit.vue'
+import { type Invoice, type itemList} from '../types/invoiceType'
+import { useInvoicesStore } from '../stores/invoices';
 
 const props = defineProps<{
-    invoice: Invoice
-}>();
-
-const emit = defineEmits<{
-    updateEdit: [value : Invoice]
+    i: number
 }>();
 
 const days = ref<number>(0);
-const invoiceDetail = ref<Invoice>();
-invoiceDetail.value = props.invoice;
+const invoicesStore = useInvoicesStore();
+
+const invoice = JSON.parse(JSON.stringify(invoicesStore.invoices[props.i]));
+const invoiceDetail = ref<Invoice>(invoice);
+invoiceDetail.value = invoice;
+
+const cancelEdit = () => {
+    invoiceDetail.value = JSON.parse(JSON.stringify(invoicesStore.invoices[props.i]));
+}
 
 const updateEdit = () => {
-    emit('updateEdit', invoiceDetail.value);
+    invoicesStore.invoices[props.i] = JSON.parse(JSON.stringify(invoiceDetail.value));
+}
+
+const createItem = () => {
+    const item : Ref<itemList> = ref({name: '', qty: 0, price: 0});
+    invoiceDetail.value.itemList.push(item.value);
+}
+
+const deleteItem = (i : number) => {
+    invoiceDetail.value.itemList.splice(i, 1);
 }
 </script>

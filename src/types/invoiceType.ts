@@ -16,11 +16,13 @@ export interface itemList {
     price: number,
 }
 
+export type status = 'Draft' | 'Pending' | 'Paid'
+
 export interface Invoice {
     id: string,
     billFrom: Address,
     billTo: Client,
-    status: string,
+    status: status,
     invoiceDate: string,
     paymentDue: string,
     description: string,

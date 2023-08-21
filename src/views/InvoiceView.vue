@@ -13,7 +13,7 @@
                 <div class="row mb-5 bg-secondary px-5 py-4 rounded-5">
                     <div class="col d-flex align-items-center">
                         <p class="mb-0 me-3">Status</p>
-                        <button class="btn btn-warning d-flex align-items-center text-light py-2 px-4">
+                        <button class="btn d-flex align-items-center text-light py-2 px-4" :class="{'btn-info': invoicesStore.invoices[i].status === 'Draft', 'btn-warning': invoicesStore.invoices[i].status === 'Pending', 'btn-success': invoicesStore.invoices[i].status === 'Paid'}">
                             <div class="p-2 bg-white rounded-circle"></div>
                             <span class="ms-2 mb-0">{{ invoicesStore.invoices[i].status }}</span>
                         </button>
@@ -21,7 +21,11 @@
                     <div class="col text-end">
                         <button class="btn btn-info rounded-pill text-light py-3 px-4 me-2" data-bs-toggle="modal" data-bs-target="#invoiceModal">Edit</button>
                         <RouterLink :to="{name: 'home'}"><button class="btn btn-danger rounded-pill text-light py-3 px-4 me-2" @click="invoicesStore.deleteInvoice(i)">Delete</button></RouterLink>
-                        <button class="btn btn-success rounded-pill text-light py-3 px-4">Mask As Paid</button>
+                        <button class="btn rounded-pill text-light py-3 px-4" @click="changeStatus" :class="{'btn-warning': !pending, 'btn-success': pending}">
+                            <span>Mask As </span>
+                            <span v-if="!pending">Pending</span>
+                            <span v-else>Paid</span>
+                        </button>
                     </div>
                 </div>
                 <div class="row mb-5 bg-secondary p-5 rounded-5">
@@ -112,7 +116,7 @@
     </div>
 <!-- Modal -->
     <Teleport to="#modal">
-        <modalEdit :invoice="invoicesStore.invoices[i]" @updateEdit="updateInvoice"/>
+        <modalEdit :i="i"/>
     </Teleport>
 <!-- =========== -->
 </template>
@@ -122,7 +126,8 @@
 import modalEdit from '../components/modalEdit.vue';
 import { useRoute } from 'vue-router';
 import { useInvoicesStore } from '../stores/invoices';
-import { type Invoice} from '../types/invoiceType';
+import { ref, type Ref, watchEffect } from 'vue';
+import { type status } from '../types/invoiceType'
 
 const Route = useRoute();
 const invoicesStore = useInvoicesStore();
@@ -130,9 +135,31 @@ const invoicesStore = useInvoicesStore();
 const id : string = Route.params.id;
 const idArray = invoicesStore.invoices.map(el => el.id);
 const i = idArray.indexOf(id);
+const pending : Ref<boolean> = ref();
 
-const updateInvoice= (data: Invoice) => {
-    invoicesStore.invoices[i] = data;
+watchEffect(() => {
+    let total : number = 0;
+    invoicesStore.invoices[i].itemList.forEach(el => {
+        total += +el.qty * +el.price;
+    });
+    invoicesStore.invoices[i].total = total;
+});
+
+const status : status = invoicesStore.invoices[i].status;
+if (status === 'Draft' || status === 'Paid') {
+    pending.value = false;
+} else {
+    pending.value = true;
+}
+
+const changeStatus = () => {
+    if (!pending.value) {
+        invoicesStore.invoices[i].status = 'Pending'
+        pending.value = true
+    } else {
+        invoicesStore.invoices[i].status = 'Paid'
+        pending.value = false
+    }
 }
 
 </script>

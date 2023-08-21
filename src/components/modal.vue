@@ -111,7 +111,7 @@
                         </div>
                     <!-- Create item -->
                         <div class="row mb-4" v-for="(item, index) in invoiceDetailStore.itemList" :key="index">
-                            <itemList :item="item" :index="index"/>
+                            <ItemList :item="item" :index="index"/>
                         </div>
                     <!-- ===== -->
                         <div class="row mb-4">
@@ -138,7 +138,7 @@
 import { onUnmounted, ref, watch } from 'vue';
 import { useInvoiceDetailsStore } from '../stores/invoiceDetails'
 import { useInvoicesStore } from '../stores/invoices';
-import itemList from './itemList.vue';
+import ItemList from './ItemList.vue';
 
 const invoiceDetailStore = useInvoiceDetailsStore();
 const invoicesStore  = useInvoicesStore();

@@ -71,7 +71,7 @@
               <p class="mb-0">$ {{ invoice.total }}</p>
             </div>
             <div class="col text-center d-flex align-items-center">
-              <button class="btn btn-warning d-flex align-items-center text-light">
+              <button class="btn d-flex align-items-center text-light" :class="{'btn-info': invoice.status === 'Draft', 'btn-warning': invoice.status === 'Pending', 'btn-success': invoice.status === 'Paid'}">
                 <div class="p-2 bg-white rounded-circle"></div>
                 <span class="ms-2 mb-0">{{ invoice.status }}</span>
               </button>
