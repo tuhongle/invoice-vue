@@ -135,10 +135,10 @@
 </template>
 
 <script setup lang="ts">
+import ItemList from './ItemList.vue';
 import { onUnmounted, ref, watch } from 'vue';
 import { useInvoiceDetailsStore } from '../stores/invoiceDetails'
 import { useInvoicesStore } from '../stores/invoices';
-import ItemList from './ItemList.vue';
 
 const invoiceDetailStore = useInvoiceDetailsStore();
 const invoicesStore  = useInvoicesStore();
